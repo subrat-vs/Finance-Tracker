@@ -74,7 +74,7 @@
 
 </head>
 
-<body class="h-screen overflow-hidden">
+<body class="h-screen overflow-hidden relative">
     <div class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card" id="login-card">
         <div class="flex flex-col gap-2">
             <h2 class="text-2xl font-medium text-center">Welcome Back</h2>
@@ -117,10 +117,64 @@
         </div>
     </div>
 
+    <div
+        class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded-sm w-md">
+        <form class="flex flex-col gap-6 w-full">
+            <div class="flex justify-between gap-6 items-center">
+                <h2 class="text-2xl font-medium">Add Transaction</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-x-icon lucide-x">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label for="type">Type</label>
+                <select id="type" class="outline-none px-2 py-1 border rounded-sm" required>
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="description" class="text-sm">Description</label>
+                <input type="text" id="description" class="border-b py-1 px-2 text-sm outline-none"
+                    placeholder="e.g. Amazon, Salary, Coffee" required>
+            </div>
+            <div class="flex justify-between">
+                <div class="flex flex-col gap-2">
+                    <label for="amount">Amount</label>
+                    <input type="text" id="amount" class="border py-1 px-2 text-sm outline-none rounded-sm" required>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" class="border-b py-1 px-2 text-sm outline-none" required>
+                </div>
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="category">Category</label>
+                <select id="category" class="outline-none px-2 py-1 border rounded-sm" required>
+                    <option disabled selected>Select a category</option>
+                    <option value="food">Food & Dining</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="recharge">Recharge & Bills</option>
+                    <option value="petrol">Petrol & Auto</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="salary">Salary</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <button class="px-4 py-2 bg-black text-white rounded-sm items-end cursor-pointer">
+                Save Transaction
+            </button>
+        </form>
+    </div>
+
     <div id="app" class="flex h-screen overflow-hidden">
         <aside id="sidebar"
             class="fixed sm:static top-0 left-[-100%] sm:left-0 z-20 h-screen w-64 border-r p-4 flex flex-col gap-12 bg-[#f6f6f6] transition-all duration-300 sm:flex shrink-0">
-            <div id="overlay" class="hidden fixed inset-0 bg-black/30 z-10 sm:hidden"></div>
             <div class="flex items-center">
                 <div class="flex flex-col items-end">
                     <h2 class="sm:text-2xl font-semibold flex items-center gap-1 border-b pr-2">
@@ -147,10 +201,17 @@
             </div>
         </aside>
         <main class="flex-1 h-screen overflow-hidden flex flex-col">
+            <div id="overlay" class="hidden fixed inset-0 z-10 sm:hidden"></div>
             <nav
                 class="sticky top-0 z-10 bg-[#f6f6f6] flex justify-between py-4 px-6 gap-6 items-center border-b shrink-0">
                 <div class="flex items-center gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu sm:hidden cursor-pointer" id="menu-btn"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-menu-icon lucide-menu sm:hidden cursor-pointer" id="menu-btn">
+                        <path d="M4 5h16" />
+                        <path d="M4 12h16" />
+                        <path d="M4 19h16" />
+                    </svg>
                     <div class="sm:hidden flex items-center">
                         <div class="flex flex-col items-end">
                             <h2 class="sm:text-2xl font-semibold flex items-center gap-1 border-b pr-2">FinTrack Pro
@@ -275,6 +336,9 @@
                         </div>
                     </div>
                 </div>
+            </section>
+            <section>
+                
             </section>
         </main>
     </div>
