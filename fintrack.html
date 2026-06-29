@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Fintrack</title>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f6f6f6;
+            user-select: none;
+        }
+
+        section {
+            background: #f6f6f6;
+        }
+
+        .ent-card {
+            background: #fff;
+        }
+
+        aside {
+            background: #f6f6f6;
+        }
+
+        .nav-link {
+            position: relative;
+            width: fit-content;
+            cursor: pointer;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link.active::after {
+            width: 140%;
+        }
+
+        section::-webkit-scrollbar {
+            width: 1px;
+        }
+
+        section::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        section::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 999px;
+        }
+
+        section::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+
+</head>
+
+<body class="h-screen overflow-hidden">
+    <div class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card" id="login-card">
+        <div class="flex flex-col gap-2">
+            <h2 class="text-2xl font-medium text-center">Welcome Back</h2>
+            <p class="text-center">Login to FinTrack Pro</p>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="login-user-input">Username</label>
+            <input type="text" class="border py-1 px-2 rounded-sm" id="login-user-input" required>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="login-pass-input">Password</label>
+            <input type="password" class="border py-1 px-2 rounded-sm" id="login-pass-input" required>
+        </div>
+        <div class="flex flex-col gap-2">
+            <button type="submit" class="bg-blue-700 text-white p-2 rounded-sm cursor-pointer"
+                id="login-btn">Login</button>
+            <p class="text-center">Don't have an account? <a class="text-blue-700 cursor-pointer" id="reg-link">Register
+                    here</a></p>
+        </div>
+    </div>
+
+    <div class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card" id="reg-card">
+        <div class="flex flex-col gap-2">
+            <h2 class="text-2xl font-medium text-center">Create Account</h2>
+            <p class="text-center">Join FinTrack Pro</p>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="reg-user-input">Choose a Username</label>
+            <input type="text" class="border py-1 px-2 rounded-sm" id="reg-user-input" required>
+        </div>
+        <div class="flex flex-col gap-2">
+            <label for="reg-pass-input">Password</label>
+            <input type="password" class="border py-1 px-2 rounded-sm" id="reg-pass-input" required>
+        </div>
+        <div class="flex flex-col gap-2">
+            <button type="submit" class="bg-green-700 text-white p-2 rounded-sm cursor-pointer"
+                id="reg-btn">Register</button>
+            <p class="text-center">Don't have an account? <a class="text-blue-700 cursor-pointer" id="login-link">Login
+                    here</a></p>
+        </div>
+    </div>
+
+    <div id="app" class="flex h-screen overflow-hidden">
+        <aside id="sidebar"
+            class="fixed sm:static top-0 left-[-100%] sm:left-0 z-20 h-screen w-64 border-r p-4 flex flex-col gap-12 bg-[#f6f6f6] transition-all duration-300 sm:flex shrink-0">
+            <div id="overlay" class="hidden fixed inset-0 bg-black/30 z-10 sm:hidden"></div>
+            <div class="flex items-center">
+                <div class="flex flex-col items-end">
+                    <h2 class="sm:text-2xl font-semibold flex items-center gap-1 border-b pr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-swiss-franc-icon lucide-swiss-franc bg-black text-white p-2">
+                            <path d="M10 21V3h8" />
+                            <path d="M6 16h9" />
+                            <path d="M10 9.5h7" />
+                        </svg>
+                        inTrack Pro
+                    </h2>
+                    <p class="text-sm">Enterprise Finance</p>
+                </div>
+            </div>
+            <div class="flex flex-col gap-6 px-8">
+                <h4 class="flex cursor-pointer nav-link active">Dashboard</h4>
+                <h4 class="flex cursor-pointer nav-link">Setting</h4>
+            </div>
+            <div class="flex justify-center mt-auto pb-6">
+                <button class="px-4 py-2 bg-black text-white rounded-sm items-end cursor-pointer">
+                    + Add Transaction
+                </button>
+            </div>
+        </aside>
+        <main class="flex-1 h-screen overflow-hidden flex flex-col">
+            <nav
+                class="sticky top-0 z-10 bg-[#f6f6f6] flex justify-between py-4 px-6 gap-6 items-center border-b shrink-0">
+                <div class="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu-icon lucide-menu sm:hidden cursor-pointer" id="menu-btn"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+                    <div class="sm:hidden flex items-center">
+                        <div class="flex flex-col items-end">
+                            <h2 class="sm:text-2xl font-semibold flex items-center gap-1 border-b pr-2">FinTrack Pro
+                            </h2>
+                        </div>
+                    </div>
+
+                    <div class="hidden sm:flex flex-col">
+                        <h1 class="text-sm font-semibold">Financial Overview</h1>
+                        <p class="text-xs border-b">Real-time tracking application</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-center border-l px-2">
+                    <p class="text-sm">Subrat</p>
+                    <button class="px-4 py-2 bg-black text-white rounded-sm text-sm cursor-pointer">Logout</button>
+                </div>
+            </nav>
+            <section class="flex-1 overflow-y-auto p-4">
+                <div class="flex justify-evenly gap-4">
+                    <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
+                        <div class="border w-full p-4 flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" class="lucide lucide-landmark-icon lucide-landmark">
+                                    <path d="M10 18v-7" />
+                                    <path
+                                        d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
+                                    <path d="M14 18v-7" />
+                                    <path d="M18 18v-7" />
+                                    <path d="M3 22h18" />
+                                    <path d="M6 18v-7" />
+                                </svg>
+                                <p class="text-sm">Current Balance</p>
+                            </div>
+                            <h2 class="text-2xl font-semibold"><span>$0.00</span></h2>
+                        </div>
+                        <div class="border w-full p-4 flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="#15603d" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down">
+                                    <path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
+                                    <path d="m16 19 3 3 3-3" />
+                                    <path d="M18 12h.01" />
+                                    <path d="M19 16v6" />
+                                    <path d="M6 12h.01" />
+                                    <circle cx="12" cy="12" r="2" />
+                                </svg>
+                                <p class="text-sm">Total Income</p>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-green-700"><span>$0.00</span></h2>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
+                        <div class="border w-full p-4 flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-banknote-arrow-up-icon lucide-banknote-arrow-up">
+                                    <path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
+                                    <path d="M18 12h.01" />
+                                    <path d="M19 22v-6" />
+                                    <path d="m22 19-3-3-3 3" />
+                                    <path d="M6 12h.01" />
+                                    <circle cx="12" cy="12" r="2" />
+                                </svg>
+                                <p class="text-sm">Total Expense</p>
+                            </div>
+                            <h2 class="text-2xl font-semibold text-red-700"><span>$0.00</span></h2>
+                        </div>
+                        <div class="border w-full p-4 flex flex-col gap-2">
+                            <div class="flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    class="lucide lucide-arrow-right-left-icon lucide-arrow-right-left">
+                                    <path d="m16 3 4 4-4 4" />
+                                    <path d="M20 7H4" />
+                                    <path d="m8 21-4-4 4-4" />
+                                    <path d="M4 17h16" />
+                                </svg>
+                                <p class="text-sm">Total Transactions</p>
+                            </div>
+                            <h2 class="text-2xl font-semibold"><span>0</span></h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col lg:flex-row gap-6 w-full">
+                    <div class="border p-4 mt-6 flex-1 min-w-0">
+                        <div class="flex text-xs justify-between">
+                            <h2 class="text-2xl font-medium">Cash Flow Analysis</h2>
+                            <button class="bg-black text-white p-2 rounded-sm cursor-pointer">Reset All Data</button>
+                        </div>
+                        <div class="h-[250px] relative">
+                            <canvas id="cash-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="border p-4 mt-6 flex-1 min-w-0">
+                        <div class="flex flex-col text-xs gap-4">
+                            <h2 class="text-2xl font-medium">All Transactions</h2>
+                            <div class="flex flex-col sm:flex-row justify-between gap-4">
+                                <div class="flex p-2 gap-1 items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
+                                        <path d="m21 21-4.34-4.34" />
+                                        <circle cx="11" cy="11" r="8" />
+                                    </svg>
+                                    <input type="text" id="" placeholder="Search transactions"
+                                        class="p-1 outline-none border">
+                                </div>
+                                <select id="" class="w-3xs">
+                                    <option value="all">All Types</option>
+                                    <option value="income">Income only</option>
+                                    <option value="expense">Expense only</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- <script>
+        const loginCard = document.getElementById("login-card");
+        const regCard = document.getElementById("reg-card");
+        const regLink = document.getElementById("reg-link");
+        const loginLink = document.getElementById("login-link");
+        const app = document.getElementById("app");
+
+        const loginUserInput = document.getElementById("login-user-input");
+        const loginPassInput = document.getElementById("login-pass-input");
+        const regUserInput = document.getElementById("reg-user-input");
+        const regPassInput = document.getElementById("reg-pass-input");
+
+        const loginBtn = document.getElementById("login-btn");
+        const regBtn = document.getElementById("reg-btn");
+
+
+        // Main View Controller
+        function showView(view) {
+            // Hide all
+            loginCard.classList.add("hidden");
+            regCard.classList.add("hidden");
+            app.classList.add("hidden");
+
+            loginCard.classList.remove("flex");
+            regCard.classList.remove("flex");
+            app.classList.remove("flex");
+
+            // Show required view
+            if (view === "login") {
+                loginCard.classList.remove("hidden");
+                loginCard.classList.add("flex");
+
+                document.body.className =
+                    "flex items-center justify-center h-screen bg-gray-100";
+            }
+
+            if (view === "register") {
+                regCard.classList.remove("hidden");
+                regCard.classList.add("flex");
+
+                document.body.className =
+                    "flex items-center justify-center h-screen bg-gray-100";
+            }
+
+            if (view === "app") {
+                app.classList.remove("hidden");
+                app.classList.add("flex");
+
+                document.body.className =
+                    "min-h-screen bg-white";
+            }
+        }
+
+
+        // Initial Check
+        window.addEventListener("DOMContentLoaded", () => {
+            const savedUsername = localStorage.getItem("username");
+            const savedPassword = localStorage.getItem("password");
+
+            if (savedUsername && savedPassword) {
+                showView("login");
+            } else {
+                showView("register");
+            }
+        });
+
+
+        // Switch to Register
+        regLink.addEventListener("click", () => {
+            showView("register");
+        });
+
+
+        // Switch to Login
+        loginLink.addEventListener("click", () => {
+            showView("login");
+        });
+
+
+        // Register Logic
+        regBtn.addEventListener("click", () => {
+            const username = regUserInput.value.trim();
+            const password = regPassInput.value.trim();
+
+            if (username === "" || password === "") {
+                alert("Please fill all fields");
+                return;
+            }
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("password", password);
+
+            alert("Registration successful");
+
+            regUserInput.value = "";
+            regPassInput.value = "";
+
+            showView("login");
+        });
+
+
+        // Login Logic
+        loginBtn.addEventListener("click", () => {
+            const username = loginUserInput.value.trim();
+            const password = loginPassInput.value.trim();
+
+            const savedUsername = localStorage.getItem("username");
+            const savedPassword = localStorage.getItem("password");
+
+            if (!savedUsername || !savedPassword) {
+                alert("User does not exist");
+                showView("register");
+                return;
+            }
+
+            if (username === savedUsername && password === savedPassword) {
+                alert("Login successful");
+
+                loginUserInput.value = "";
+                loginPassInput.value = "";
+
+                showView("app");
+            } else {
+                alert("Username or Password is wrong");
+            }
+        });
+    </script> -->
+
+    <script>
+        const navLinks = document.querySelectorAll(".nav-link");
+
+        navLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.forEach(item => item.classList.remove("active"));
+                link.classList.add("active");
+            });
+        });
+
+        const menuBtn = document.getElementById("menu-btn");
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+
+        menuBtn.addEventListener("click", () => {
+            sidebar.classList.remove("left-[-100%]");
+            sidebar.classList.add("left-0");
+            overlay.classList.remove("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.remove("left-0");
+            sidebar.classList.add("left-[-100%]");
+            overlay.classList.add("hidden");
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
