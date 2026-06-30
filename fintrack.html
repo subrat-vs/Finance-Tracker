@@ -224,8 +224,8 @@
                 </div>
             </div>
             <div class="flex flex-col gap-6 px-8">
-                <h4 class="flex cursor-pointer nav-link active">Dashboard</h4>
-                <h4 class="flex cursor-pointer nav-link">Setting</h4>
+                <h4 class="flex cursor-pointer nav-link active" id="dashboard">Dashboard</h4>
+                <h4 class="flex cursor-pointer nav-link" id="setting">Setting</h4>
             </div>
             <div class="flex justify-center mt-auto pb-6">
                 <button class="px-4 py-2 bg-black text-white rounded-sm items-end cursor-pointer" id="add-transaction">
@@ -286,7 +286,7 @@
                     </div>
                 </div>
             </nav>
-            <section class="flex-1 overflow-y-auto p-4">
+            <section class="flex-1 overflow-y-auto p-4" id="dashboard-sec">
                 <div class="flex justify-evenly gap-4">
                     <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
                         <div class="border w-full p-4 flex flex-col gap-2">
@@ -395,7 +395,7 @@
                 </div>
             </section>
 
-            <section class="hidden flex-1 p-4">
+            <section class="hidden flex-1 p-4" id="setting-sec">
                 <div>
                     <h2 class="text-2xl font-medium">Settings</h2>
                     <p class="text-sm border-b w-fit">Manage your account profile and app formatting.</p>
@@ -424,7 +424,7 @@
             </section>
         </main>
     </div>
-
+<!-- 
     <script>
         const loginCard = document.getElementById("login-card");
         const regCard = document.getElementById("reg-card");
@@ -548,7 +548,7 @@
                 alert("Username or Password is wrong");
             }
         });
-    </script>
+    </script> -->
 
     <script>
         const navLinks = document.querySelectorAll(".nav-link");
@@ -580,16 +580,31 @@
     <script>
         const addTransactionBtn = document.getElementById("add-transaction")
         const saveTransactionBtn = document.getElementById("save-transaction")
-        const transactionFrom = document.getElementById("transaction-form")
+        const transactionForm = document.getElementById("transaction-form")
         const closeForm = document.getElementById("close-form")
+
+        const dashboard = document.getElementById("dashboard")
+        const setting = document.getElementById("setting")
+        const dashboardSec = document.getElementById("dashboard-sec")
+        const settingSec = document.getElementById("setting-sec")
+
         addTransactionBtn.addEventListener("click", () => {
-            transactionFrom.classList.remove("hidden")
+            transactionForm.classList.remove("hidden")
         })
         closeForm.addEventListener("click", () => {
-            transactionFrom.classList.add("hidden")
+            transactionForm.classList.add("hidden")
         })
         saveTransactionBtn.addEventListener("click", (e) => {
             e.preventDefault()
+        })
+
+        dashboard.addEventListener("click", () => {
+            dashboardSec.classList.remove("hidden")
+            settingSec.classList.add("hidden")
+        })
+        setting.addEventListener("click", () => {
+            dashboardSec.classList.add("hidden")
+            settingSec.classList.remove("hidden")
         })
     </script>
 
