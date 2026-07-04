@@ -109,7 +109,7 @@
 </head>
 
 <body class="h-screen overflow-hidden relative">
-    <div class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card p-6" id="login-card">
+    <div id="login-card" class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card p-6">
         <div class="flex flex-col gap-2">
             <h2 class="text-2xl font-medium text-center">Welcome Back</h2>
             <p class="text-center">Login to FinTrack Pro</p>
@@ -130,7 +130,7 @@
         </div>
     </div>
 
-    <div class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card p-6" id="reg-card">
+    <div id="reg-card" class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card p-6">
         <div class="flex flex-col gap-2">
             <h2 class="text-2xl font-medium text-center">Create Account</h2>
             <p class="text-center">Join FinTrack Pro</p>
@@ -151,7 +151,8 @@
         </div>
     </div>
 
-    <div class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded-sm w-md" id="transaction-form">
+    <div id="transaction-form"
+        class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded-sm w-md">
         <form class="flex flex-col gap-6 w-full">
             <div class="flex justify-between gap-6 items-center">
                 <h2 class="text-2xl font-medium">Add Transaction</h2>
@@ -205,7 +206,23 @@
         </form>
     </div>
 
-    <div id="app" class="flex h-screen overflow-hidden">
+    <div id="confirm-logout"
+        class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded-sm">
+        <div class="flex flex-col gap-6 justify-center items-center">
+            <div class="flex flex-col gap-2">
+                <h2 class="flex justify-center font-semibold text-2xl">Log Out</h2>
+                <p class="">Are you sure you want to logout?</p>
+            </div>
+            <div class="flex w-3xs justify-between">
+                <button class="px-4 py-2 bg-black text-white rounded-sm text-xs cursor-pointer"
+                    id="confirm-logout-btn">Log Out</button>
+                <button class="px-4 py-2 border rounded-sm text-xs cursor-pointer"
+                    id="cancle-logout-btn">Cancle</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="app" class="hidden flex h-screen overflow-hidden">
         <aside id="sidebar"
             class="fixed sm:static top-0 left-[-100%] sm:left-0 z-20 h-screen w-64 border-r p-4 flex flex-col gap-12 bg-[#f6f6f6] transition-all duration-300 sm:flex shrink-0">
             <div class="flex items-center">
@@ -235,7 +252,8 @@
         </aside>
         <main class="flex-1 h-screen overflow-hidden flex flex-col">
             <div id="overlay" class="hidden fixed inset-0 z-10 sm:hidden"></div>
-            <nav class="sticky top-0 z-10 bg-[#f6f6f6] flex justify-between py-4 px-6 gap-6 items-center border-b shrink-0">
+            <nav
+                class="sticky top-0 z-10 bg-[#f6f6f6] flex justify-between py-4 px-6 gap-6 items-center border-b shrink-0">
                 <div class="flex items-center gap-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -282,10 +300,12 @@
                     </label>
                     <div class="flex items-center gap-2 border-l px-2">
                         <p class="text-sm">Subrat</p>
-                        <button class="px-4 py-2 bg-black text-white rounded-sm text-xs cursor-pointer">Logout</button>
+                        <button id="logout"
+                            class="px-4 py-2 bg-black text-white rounded-sm text-xs cursor-pointer">Logout</button>
                     </div>
                 </div>
             </nav>
+
             <section class="flex-1 overflow-y-auto p-4" id="dashboard-sec">
                 <div class="flex justify-evenly gap-4">
                     <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
@@ -364,16 +384,15 @@
                     <div class="border p-4 mt-6 flex-1 min-w-0">
                         <div class="flex justify-between">
                             <h2 class="text-2xl font-medium">Cash Flow Analysis</h2>
-                            <button class="bg-black text-white py-2 px-4 rounded-sm cursor-pointer text-xs">Reset All Data</button>
                         </div>
                         <div class="h-[250px] relative">
-                            <canvas id="cash-chart"></canvas>
+                            <canvas id="cash-chart" class="block box-border"></canvas>
                         </div>
                     </div>
                     <div class="border p-4 mt-6 flex-1 min-w-0">
                         <div class="flex flex-col text-xs gap-4">
                             <h2 class="text-2xl font-medium">All Transactions</h2>
-                            <div class="flex justify-between gap-4 flex-wrap">
+                            <div class="flex gap-4 flex-wrap">
                                 <div class="flex p-2 gap-1 items-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -384,14 +403,32 @@
                                     <input type="text" id="" placeholder="Search transactions"
                                         class="p-1 outline-none border-b">
                                 </div>
-                                <select id="" class="w-3xs outline-none border-b">
+                                <select id="" class="outline-none">
                                     <option value="all" selected>All Types</option>
                                     <option value="income">Income only</option>
                                     <option value="expense">Expense only</option>
                                 </select>
                             </div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>DATE</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>CATEGORY</th>
+                                        <th>AMOUNT</th>
+                                        <th>EDIT</th>
+                                        <th>DELETE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionTableBody"></tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
+
+                <div class="flex justify-end py-4">
+                    <button class="bg-black text-white py-2 px-4 rounded-sm cursor-pointer">Reset All
+                        Data</button>
                 </div>
             </section>
 
@@ -425,189 +462,7 @@
         </main>
     </div>
 
-    <script>
-        const loginCard = document.getElementById("login-card");
-        const regCard = document.getElementById("reg-card");
-        const regLink = document.getElementById("reg-link");
-        const loginLink = document.getElementById("login-link");
-        const app = document.getElementById("app");
-
-        const loginUserInput = document.getElementById("login-user-input");
-        const loginPassInput = document.getElementById("login-pass-input");
-        const regUserInput = document.getElementById("reg-user-input");
-        const regPassInput = document.getElementById("reg-pass-input");
-
-        const loginBtn = document.getElementById("login-btn");
-        const regBtn = document.getElementById("reg-btn");
-
-
-        // Main View Controller
-        function showView(view) {
-            // Hide all
-            loginCard.classList.add("hidden");
-            regCard.classList.add("hidden");
-            app.classList.add("hidden");
-
-            loginCard.classList.remove("flex");
-            regCard.classList.remove("flex");
-            app.classList.remove("flex");
-
-            // Show required view
-            if (view === "login") {
-                loginCard.classList.remove("hidden");
-                loginCard.classList.add("flex");
-
-                document.body.className =
-                    "flex items-center justify-center h-screen bg-gray-100";
-            }
-
-            if (view === "register") {
-                regCard.classList.remove("hidden");
-                regCard.classList.add("flex");
-
-                document.body.className =
-                    "flex items-center justify-center h-screen bg-gray-100";
-            }
-
-            if (view === "app") {
-                app.classList.remove("hidden");
-                app.classList.add("flex");
-
-                document.body.className =
-                    "min-h-screen bg-white";
-            }
-        }
-        window.addEventListener("DOMContentLoaded", () => {
-            const savedUsername = localStorage.getItem("username");
-            const savedPassword = localStorage.getItem("password");
-
-            if (savedUsername && savedPassword) {
-                showView("login");
-            } else {
-                showView("register");
-            }
-        });
-
-
-        // Switch to Register
-        regLink.addEventListener("click", () => {
-            showView("register");
-        });
-
-
-        // Switch to Login
-        loginLink.addEventListener("click", () => {
-            showView("login");
-        });
-
-
-        // Register Logic
-        regBtn.addEventListener("click", () => {
-            const username = regUserInput.value.trim();
-            const password = regPassInput.value.trim();
-
-            if (username === "" || password === "") {
-                alert("Please fill all fields");
-                return;
-            }
-
-            localStorage.setItem("username", username);
-            localStorage.setItem("password", password);
-
-            alert("Registration successful");
-
-            regUserInput.value = "";
-            regPassInput.value = "";
-
-            showView("login");
-        });
-
-
-        // Login Logic
-        loginBtn.addEventListener("click", () => {
-            const username = loginUserInput.value.trim();
-            const password = loginPassInput.value.trim();
-
-            const savedUsername = localStorage.getItem("username");
-            const savedPassword = localStorage.getItem("password");
-
-            if (!savedUsername || !savedPassword) {
-                alert("User does not exist");
-                showView("register");
-                return;
-            }
-
-            if (username === savedUsername && password === savedPassword) {
-                alert("Login successful");
-
-                loginUserInput.value = "";
-                loginPassInput.value = "";
-
-                showView("app");
-            } else {
-                alert("Username or Password is wrong");
-            }
-        });
-    </script>
-
-    <script>
-        const navLinks = document.querySelectorAll(".nav-link");
-
-        navLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                navLinks.forEach(item => item.classList.remove("active"));
-                link.classList.add("active");
-            });
-        });
-
-        const menuBtn = document.getElementById("menu-btn");
-        const sidebar = document.getElementById("sidebar");
-        const overlay = document.getElementById("overlay");
-
-        menuBtn.addEventListener("click", () => {
-            sidebar.classList.remove("left-[-100%]");
-            sidebar.classList.add("left-0");
-            overlay.classList.remove("hidden");
-        });
-
-        overlay.addEventListener("click", () => {
-            sidebar.classList.remove("left-0");
-            sidebar.classList.add("left-[-100%]");
-            overlay.classList.add("hidden");
-        });
-    </script>
-
-    <script>
-        const addTransactionBtn = document.getElementById("add-transaction")
-        const saveTransactionBtn = document.getElementById("save-transaction")
-        const transactionForm = document.getElementById("transaction-form")
-        const closeForm = document.getElementById("close-form")
-
-        const dashboard = document.getElementById("dashboard")
-        const setting = document.getElementById("setting")
-        const dashboardSec = document.getElementById("dashboard-sec")
-        const settingSec = document.getElementById("setting-sec")
-
-        addTransactionBtn.addEventListener("click", () => {
-            transactionForm.classList.remove("hidden")
-        })
-        closeForm.addEventListener("click", () => {
-            transactionForm.classList.add("hidden")
-        })
-        saveTransactionBtn.addEventListener("click", (e) => {
-            e.preventDefault()
-        })
-
-        dashboard.addEventListener("click", () => {
-            dashboardSec.classList.remove("hidden")
-            settingSec.classList.add("hidden")
-        })
-        setting.addEventListener("click", () => {
-            dashboardSec.classList.add("hidden")
-            settingSec.classList.remove("hidden")
-        })
-    </script>
-
+    <script src="app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
