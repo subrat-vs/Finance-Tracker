@@ -387,7 +387,6 @@ function initTheme() {
     const prefersDark = window.matchMedia("(prefers-color-scheme: light)").matches
     applyTheme(savedTheme === "light" || (!savedTheme && prefersDark) ? false : true)
 }
-
 themeToggle.addEventListener("change", () => applyTheme(themeToggle.checked))
 
 function initChart() {
