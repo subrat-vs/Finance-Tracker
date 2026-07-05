@@ -378,7 +378,7 @@ resetBtn.addEventListener("click", () => {
 
 function applyTheme(isDark) {
     document.documentElement.classList.toggle("dark", isDark)
-    localStorage.setItem("theme", isDark ? "dark" : "light")
+    localStorage.setItem("theme", isDark ? "light" : "dark")
     if (themeToggle) themeToggle.checked = isDark
 }
 
