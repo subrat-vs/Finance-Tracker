@@ -385,7 +385,7 @@ function applyTheme(isDark) {
 function initTheme() {
     const savedTheme = localStorage.getItem("theme")
     const prefersDark = window.matchMedia("(prefers-color-scheme: light)").matches
-    applyTheme(savedTheme === "light" || (!savedTheme && prefersDark))
+    applyTheme(savedTheme === "light" || (!savedTheme && prefersDark) ? false : true)
 }
 
 themeToggle.addEventListener("change", () => applyTheme(themeToggle.checked))
@@ -411,7 +411,6 @@ function initChart() {
 
 window.addEventListener("DOMContentLoaded", () => {
     initTheme()
-
     const hasAcc = localStorage.getItem("username") && localStorage.getItem("password")
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"
 
