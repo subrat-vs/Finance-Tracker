@@ -1,469 +1,738 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Fintrack</title>
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f6f6f6;
-            user-select: none;
-        }
-
-        section {
-            background: #f6f6f6;
-        }
-
-        .ent-card {
-            background: #fff;
-        }
-
-        aside {
-            background: #f6f6f6;
-        }
-
-        .nav-link {
-            position: relative;
-            width: fit-content;
-            cursor: pointer;
-        }
-
-        .nav-link::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            width: 0;
-            height: 2px;
-            background: black;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .nav-link.active::after {
-            width: 140%;
-        }
-
-        section::-webkit-scrollbar {
-            width: 1px;
-        }
-
-        section::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        section::-webkit-scrollbar-thumb {
-            background: #d1d5db;
-            border-radius: 999px;
-        }
-
-        section::-webkit-scrollbar-thumb:hover {
-            background: #9ca3af;
-        }
-
-        #toggle {
-            display: none;
-        }
-
-        .icon-set {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            transition: background-color 0.2s, border-color 0.2s;
-        }
-
-        .icon-set svg {
-            position: absolute;
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        .moon-icon {
-            opacity: 0;
-            transform: scale(0) rotate(-90deg);
-        }
-
-        input:checked+.icon-set .sun-icon {
-            opacity: 0;
-            transform: scale(0) rotate(90deg);
-        }
-
-        input:checked+.icon-set .moon-icon {
-            opacity: 1;
-            transform: scale(1) rotate(0deg);
-        }
+    <style type="text/tailwindcss">
+      @custom-variant dark (&:where(.dark, .dark *));
     </style>
+    <title>Fintrack</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        user-select: none;
+      }
 
-</head>
+      .nav-link {
+        position: relative;
+        width: fit-content;
+        cursor: pointer;
+      }
 
-<body class="h-screen overflow-hidden relative">
-    <div id="login-card" class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card p-6">
-        <div class="flex flex-col gap-2">
-            <h2 class="text-2xl font-medium text-center">Welcome Back</h2>
-            <p class="text-center">Login to FinTrack Pro</p>
-        </div>
-        <div class="flex flex-col gap-2">
-            <label for="login-user-input">Username</label>
-            <input type="text" class="border py-1 px-2 rounded-sm" id="login-user-input" required>
-        </div>
-        <div class="flex flex-col gap-2">
-            <label for="login-pass-input">Password</label>
-            <input type="password" class="border py-1 px-2 rounded-sm" id="login-pass-input" required>
-        </div>
-        <div class="flex flex-col gap-2">
-            <button type="submit" class="bg-blue-700 text-white p-2 rounded-sm cursor-pointer"
-                id="login-btn">Login</button>
-            <p class="text-center">Don't have an account? <a class="text-blue-700 cursor-pointer" id="reg-link">Register
-                    here</a></p>
-        </div>
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 0;
+        height: 2px;
+        background: black;
+        transition: width 0.3s ease;
+      }
+
+      .dark .nav-link::after {
+        background: #cccccc;
+      }
+
+      .nav-link:hover::after {
+        width: 100%;
+      }
+
+      .nav-link.active::after {
+        width: 140%;
+      }
+
+      section::-webkit-scrollbar {
+        width: 1px;
+      }
+
+      section::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      section::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 999px;
+      }
+
+      section::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+      }
+
+      #toggle {
+        display: none;
+      }
+
+      .icon-set {
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        transition:
+          background-color 0.2s,
+          border-color 0.2s;
+      }
+
+      .icon-set svg {
+        position: absolute;
+        transition:
+          transform 0.2s ease,
+          opacity 0.2s ease;
+      }
+
+      .moon-icon {
+        opacity: 0;
+        transform: scale(0) rotate(-90deg);
+      }
+
+      input:checked + .icon-set .sun-icon {
+        opacity: 0;
+        transform: scale(0) rotate(90deg);
+      }
+
+      input:checked + .icon-set .moon-icon {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+      }
+    </style>
+  </head>
+
+  <body class="h-screen overflow-hidden relative">
+    <div
+      class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm p-6 bg-white"
+      id="login-card"
+    >
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-medium text-center">Welcome Back</h2>
+        <p class="text-center">Login to FinTrack</p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="login-user-input">Username</label>
+        <input
+          type="text"
+          class="border py-1 px-2 rounded-sm"
+          id="login-user-input"
+          required
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="login-pass-input">Password</label>
+        <input
+          type="password"
+          class="border py-1 px-2 rounded-sm"
+          id="login-pass-input"
+          required
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <button
+          class="bg-blue-700 text-white p-2 rounded-sm cursor-pointer"
+          id="login-btn"
+        >
+          Login
+        </button>
+        <p class="text-center">
+          Don't have an account?
+          <a class="text-blue-700 cursor-pointer" id="reg-link"
+            >Register here</a
+          >
+        </p>
+      </div>
     </div>
 
-    <div id="reg-card" class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm ent-card p-6">
-        <div class="flex flex-col gap-2">
-            <h2 class="text-2xl font-medium text-center">Create Account</h2>
-            <p class="text-center">Join FinTrack Pro</p>
-        </div>
-        <div class="flex flex-col gap-2">
-            <label for="reg-user-input">Choose a Username</label>
-            <input type="text" class="border py-1 px-2 rounded-sm" id="reg-user-input" required>
-        </div>
-        <div class="flex flex-col gap-2">
-            <label for="reg-pass-input">Password</label>
-            <input type="password" class="border py-1 px-2 rounded-sm" id="reg-pass-input" required>
-        </div>
-        <div class="flex flex-col gap-2">
-            <button type="submit" class="bg-green-700 text-white p-2 rounded-sm cursor-pointer"
-                id="reg-btn">Register</button>
-            <p class="text-center">Don't have an account? <a class="text-blue-700 cursor-pointer" id="login-link">Login
-                    here</a></p>
-        </div>
+    <div
+      class="hidden w-full max-w-sm flex-col gap-6 rounded-sm shadow-sm p-6 bg-white"
+      id="reg-card"
+    >
+      <div class="flex flex-col gap-2">
+        <h2 class="text-2xl font-medium text-center">Create Account</h2>
+        <p class="text-center">Join FinTrack</p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="reg-user-input">Choose a Username</label>
+        <input
+          type="text"
+          class="border py-1 px-2 rounded-sm"
+          id="reg-user-input"
+          required
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="reg-pass-input">Password</label>
+        <input
+          type="password"
+          class="border py-1 px-2 rounded-sm"
+          id="reg-pass-input"
+          required
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <button
+          type="submit"
+          class="bg-green-700 text-white p-2 rounded-sm cursor-pointer"
+          id="reg-btn"
+        >
+          Register
+        </button>
+        <p class="text-center">
+          Don't have an account?
+          <a class="text-blue-700 cursor-pointer" id="login-link">Login here</a>
+        </p>
+      </div>
     </div>
 
-    <div id="transaction-form"
-        class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded-sm w-md">
-        <form class="flex flex-col gap-6 w-full">
-            <div class="flex justify-between gap-6 items-center">
-                <h2 class="text-2xl font-medium">Add Transaction</h2>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-x-icon lucide-x cursor-pointer" id="close-form">
-                    <path d="M18 6 6 18" />
-                    <path d="m6 6 12 12" />
+    <div
+      class="hidden fixed inset-0 z-90 bg-black/50"
+      id="modal-backdrop"
+    ></div>
+    <div
+      class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#f6f6f6] dark:bg-[#0d0d0d] p-6 shadow-lg rounded-sm w-md"
+      id="transaction-form"
+    >
+      <form class="flex flex-col gap-6 w-full">
+        <div class="flex justify-between gap-6 items-center">
+          <h2 class="text-2xl font-medium dark:text-[#cccccc]">
+            Add Transaction
+          </h2>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-x-icon lucide-x cursor-pointer dark:text-[#cccccc]"
+            id="close-form"
+          >
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
+        </div>
+
+        <div class="flex flex-col gap-2">
+          <label for="type" class="dark:text-[#cccccc]">Type</label>
+          <select
+            id="type"
+            class="outline-none px-2 py-1 border-b bg-transparent dark:border-[#cccccc] dark:text-[#cccccc]"
+          >
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="description" class="text-sm dark:text-[#cccccc]"
+            >Description</label
+          >
+          <input
+            type="text"
+            id="description"
+            class="border-b py-1 px-2 text-sm outline-none bg-transparent dark:border-[#cccccc] dark:text-[#cccccc]"
+            placeholder="e.g. Amazon, Salary, Coffee"
+            required
+          />
+        </div>
+        <div class="flex justify-between">
+          <div class="flex flex-col gap-2">
+            <label for="amount" class="dark:text-[#cccccc]">Amount</label>
+            <input
+              type="number"
+              id="amount"
+              class="border-b py-1 px-2 text-sm outline-none bg-transparent dark:border-[#cccccc] dark:text-[#cccccc]"
+              required
+            />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="date" class="dark:text-[#cccccc]">Date</label>
+            <input
+              type="date"
+              id="date"
+              class="border-b py-1 px-2 text-sm outline-none bg-transparent dark:border-[#cccccc] dark:text-[#cccccc]"
+              required
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="category" class="dark:text-[#cccccc]">Category</label>
+          <select
+            id="category"
+            class="outline-none px-2 py-1 border-b bg-transparent dark:border-zinc-700 dark:text-[#cccccc]"
+            required
+          >
+            <option disabled selected>Select a category</option>
+            <option value="food">Food & Dining</option>
+            <option value="shopping">Shopping</option>
+            <option value="recharge">Recharge & Bills</option>
+            <option value="petrol">Petrol & Auto</option>
+            <option value="utilities">Utilities</option>
+            <option value="salary">Salary</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button
+          class="px-4 py-2 bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] rounded-sm items-end cursor-pointer active:scale-95"
+          id="save-transaction"
+        >
+          Save Transaction
+        </button>
+      </form>
+    </div>
+
+    <div
+      class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-[#1a1a1a] p-6 shadow-lg rounded-sm"
+      id="confirm-logout"
+    >
+      <div class="flex flex-col gap-6 justify-center items-center">
+        <div class="flex flex-col gap-2">
+          <h2
+            class="flex justify-center font-semibold text-2xl dark:text-[#cccccc]"
+          >
+            Log Out
+          </h2>
+          <p class="dark:text-[#cccccc]">Are you sure you want to logout?</p>
+        </div>
+        <div class="flex w-3xs justify-between">
+          <button
+            class="px-4 py-2 bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] rounded-sm text-xs cursor-pointer active:scale-95"
+            id="confirm-logout-btn"
+          >
+            Logout
+          </button>
+          <button
+            class="px-4 py-2 border rounded-sm text-xs cursor-pointer dark:border-[#cccccc] dark:text-[#cccccc] active:scale-95"
+            id="cancle-logout-btn"
+          >
+            Cancle
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hidden h-screen overflow-hidden" id="app">
+      <aside
+        class="fixed sm:static top-0 left-[-100%] sm:left-0 z-20 h-screen w-64 border-r p-4 flex flex-col gap-12 bg-[#f6f6f6] dark:bg-[#0d0d0d] dark:border-[#cccccc] transition-all duration-300 sm:flex shrink-0"
+        id="sidebar"
+      >
+        <div class="flex items-center">
+          <div class="flex flex-col items-end">
+            <h2
+              class="sm:text-2xl font-semibold flex items-center gap-1 border-b dark:border-[#cccccc] pr-2 dark:text-[#cccccc]"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="36"
+                height="36"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-swiss-franc-icon lucide-swiss-franc bg-black text-white p-2 dark:bg-[#cccccc] dark:text-[#121212]"
+              >
+                <path d="M10 21V3h8" />
+                <path d="M6 16h9" />
+                <path d="M10 9.5h7" />
+              </svg>
+              inTrack &nbsp; &nbsp; &nbsp; &nbsp;
+            </h2>
+            <p class="text-sm dark:text-[#cccccc]">Enterprise Finance</p>
+          </div>
+        </div>
+        <div class="flex flex-col gap-6 px-8">
+          <h4
+            class="flex cursor-pointer nav-link active dark:text-[#cccccc]"
+            id="dashboard"
+          >
+            Dashboard
+          </h4>
+          <h4
+            class="flex cursor-pointer nav-link dark:text-[#cccccc]"
+            id="setting"
+          >
+            Setting
+          </h4>
+        </div>
+        <div class="flex justify-center mt-auto pb-6">
+          <button
+            class="px-4 py-2 bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] rounded-sm items-end cursor-pointer active:scale-95"
+            id="add-transaction"
+          >
+            + Add Transaction
+          </button>
+        </div>
+      </aside>
+      <main class="flex-1 h-screen overflow-hidden flex flex-col">
+        <div class="hidden fixed inset-0 z-10 sm:hidden" id="overlay"></div>
+        <nav
+          class="sticky top-0 z-10 bg-[#f6f6f6] dark:bg-[#0d0d0d] flex justify-between py-4 px-6 gap-6 items-center border-b dark:border-[#cccccc] shrink-0"
+        >
+          <div class="flex items-center gap-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-menu-icon lucide-menu sm:hidden cursor-pointer dark:text-zinc-100"
+              id="menu-btn"
+            >
+              <path d="M4 5h16" />
+              <path d="M4 12h16" />
+              <path d="M4 19h16" />
+            </svg>
+
+            <div class="hidden sm:flex flex-col">
+              <h1 class="text-sm font-semibold dark:text-[#cccccc]">
+                Financial Overview
+              </h1>
+              <p
+                class="text-xs border-b dark:border-[#cccccc] dark:text-[#cccccc]"
+              >
+                Real-time tracking application
+              </p>
+            </div>
+          </div>
+          <div class="flex gap-2 items-center">
+            <label class="cursor-pointer text-black dark:text-[#cccccc]">
+              <input type="checkbox" id="toggle" />
+              <div class="icon-set">
+                <svg
+                  class="sun-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2" />
+                  <path d="M12 20v2" />
+                  <path d="m4.93 4.93 1.41 1.41" />
+                  <path d="m17.66 17.66 1.41 1.41" />
+                  <path d="M2 12h2" />
+                  <path d="M20 12h2" />
+                  <path d="m6.34 17.66-1.41 1.41" />
+                  <path d="m19.07 4.93-1.41 1.41" />
                 </svg>
+                <svg
+                  class="moon-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                </svg>
+              </div>
+            </label>
+            <div
+              class="flex items-center gap-4 border-l dark:border-[#cccccc] px-2"
+            >
+              <p class="text-sm dark:text-[#cccccc]" id="nav-user"></p>
+              <button
+                id="logout"
+                class="px-4 py-2 bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] rounded-sm text-xs cursor-pointer active:scale-95"
+              >
+                Logout
+              </button>
             </div>
+          </div>
+        </nav>
 
-            <div class="flex flex-col gap-2">
-                <label for="type">Type</label>
-                <select id="type" class="outline-none px-2 py-1 border-b">
-                    <option value="income">Income</option>
-                    <option value="expense">Expense</option>
-                </select>
-            </div>
-            <div class="flex flex-col gap-2">
-                <label for="description" class="text-sm">Description</label>
-                <input type="text" id="description" class="border-b py-1 px-2 text-sm outline-none"
-                    placeholder="e.g. Amazon, Salary, Coffee" required>
-            </div>
-            <div class="flex justify-between">
-                <div class="flex flex-col gap-2">
-                    <label for="amount">Amount</label>
-                    <input type="text" id="amount" class="border-b py-1 px-2 text-sm outline-none" required>
+        <section
+          class="flex-1 overflow-y-auto p-4 bg-[#f6f6f6] dark:bg-[#0d0d0d]"
+          id="dashboard-sec"
+        >
+          <div class="flex justify-evenly gap-4">
+            <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
+              <div
+                class="border dark:border-[#cccccc] w-full p-4 flex flex-col gap-2"
+              >
+                <div class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-landmark-icon lucide-landmark dark:text-[#cccccc]"
+                  >
+                    <path d="M10 18v-7" />
+                    <path
+                      d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z"
+                    />
+                    <path d="M14 18v-7" />
+                    <path d="M18 18v-7" />
+                    <path d="M3 22h18" />
+                    <path d="M6 18v-7" />
+                  </svg>
+                  <p class="text-sm dark:text-[#cccccc]">Current Balance</p>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label for="date">Date</label>
-                    <input type="date" id="date" class="border-b py-1 px-2 text-sm outline-none" required>
+                <h2 class="text-2xl font-semibold dark:text-[#cccccc]">
+                  <span id="balance-amount">$0.00</span>
+                </h2>
+              </div>
+              <div
+                class="border dark:border-[#cccccc] w-full p-4 flex flex-col gap-2"
+              >
+                <div class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#15603d"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down"
+                  >
+                    <path
+                      d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"
+                    />
+                    <path d="m16 19 3 3 3-3" />
+                    <path d="M18 12h.01" />
+                    <path d="M19 16v6" />
+                    <path d="M6 12h.01" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
+                  <p class="text-sm dark:text-[#cccccc]">Total Income</p>
                 </div>
+                <h2
+                  class="text-2xl font-semibold text-green-700 dark:text-green-800"
+                >
+                  <span id="income-amount">$0.00</span>
+                </h2>
+              </div>
             </div>
-            <div class="flex flex-col gap-2">
-                <label for="category">Category</label>
-                <select id="category" class="outline-none px-2 py-1 border-b" required>
-                    <option disabled selected>Select a category</option>
-                    <option value="food">Food & Dining</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="recharge">Recharge & Bills</option>
-                    <option value="petrol">Petrol & Auto</option>
-                    <option value="utilities">Utilities</option>
-                    <option value="salary">Salary</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="other">Other</option>
-                </select>
+            <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
+              <div
+                class="border dark:border-[#cccccc] w-full p-4 flex flex-col gap-2"
+              >
+                <div class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#b91c1c"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-banknote-arrow-up-icon lucide-banknote-arrow-up"
+                  >
+                    <path
+                      d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5"
+                    />
+                    <path d="M18 12h.01" />
+                    <path d="M19 22v-6" />
+                    <path d="m22 19-3-3-3 3" />
+                    <path d="M6 12h.01" />
+                    <circle cx="12" cy="12" r="2" />
+                  </svg>
+                  <p class="text-sm dark:text-[#cccccc]">Total Expense</p>
+                </div>
+                <h2
+                  class="text-2xl font-semibold text-red-700 dark:text-red-800"
+                >
+                  <span id="expense-amount">$0.00</span>
+                </h2>
+              </div>
+              <div
+                class="border dark:border-[#cccccc] w-full p-4 flex flex-col gap-2"
+              >
+                <div class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-arrow-right-left-icon lucide-arrow-right-left dark:text-[#cccccc]"
+                  >
+                    <path d="m16 3 4 4-4 4" />
+                    <path d="M20 7H4" />
+                    <path d="m8 21-4-4 4-4" />
+                    <path d="M4 17h16" />
+                  </svg>
+                  <p class="text-sm dark:text-[#cccccc]">Total Transactions</p>
+                </div>
+                <h2 class="text-2xl font-semibold dark:text-[#cccccc]">
+                  <span id="transaction-count">0</span>
+                </h2>
+              </div>
             </div>
-            <button class="px-4 py-2 bg-black text-white rounded-sm items-end cursor-pointer" id="save-transaction">
-                Save Transaction
-            </button>
-        </form>
-    </div>
+          </div>
 
-    <div id="confirm-logout"
-        class="hidden absolute z-100 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded-sm">
-        <div class="flex flex-col gap-6 justify-center items-center">
-            <div class="flex flex-col gap-2">
-                <h2 class="flex justify-center font-semibold text-2xl">Log Out</h2>
-                <p class="">Are you sure you want to logout?</p>
+          <div class="flex flex-col lg:flex-row gap-6 w-full">
+            <div class="border dark:border-[#cccccc] p-4 mt-6 flex-1 min-w-0">
+              <div class="flex justify-between">
+                <h2 class="text-2xl font-medium dark:text-[#cccccc]">
+                  Cash Flow Analysis
+                </h2>
+              </div>
+              <div class="h-[250px] relative">
+                <canvas id="cash-chart" class="block box-border"></canvas>
+              </div>
             </div>
-            <div class="flex w-3xs justify-between">
-                <button class="px-4 py-2 bg-black text-white rounded-sm text-xs cursor-pointer"
-                    id="confirm-logout-btn">Log Out</button>
-                <button class="px-4 py-2 border rounded-sm text-xs cursor-pointer"
-                    id="cancle-logout-btn">Cancle</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="app" class="hidden flex h-screen overflow-hidden">
-        <aside id="sidebar"
-            class="fixed sm:static top-0 left-[-100%] sm:left-0 z-20 h-screen w-64 border-r p-4 flex flex-col gap-12 bg-[#f6f6f6] transition-all duration-300 sm:flex shrink-0">
-            <div class="flex items-center">
-                <div class="flex flex-col items-end">
-                    <h2 class="sm:text-2xl font-semibold flex items-center gap-1 border-b pr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="lucide lucide-swiss-franc-icon lucide-swiss-franc bg-black text-white p-2">
-                            <path d="M10 21V3h8" />
-                            <path d="M6 16h9" />
-                            <path d="M10 9.5h7" />
-                        </svg>
-                        inTrack Pro
-                    </h2>
-                    <p class="text-sm">Enterprise Finance</p>
-                </div>
-            </div>
-            <div class="flex flex-col gap-6 px-8">
-                <h4 class="flex cursor-pointer nav-link active" id="dashboard">Dashboard</h4>
-                <h4 class="flex cursor-pointer nav-link" id="setting">Setting</h4>
-            </div>
-            <div class="flex justify-center mt-auto pb-6">
-                <button class="px-4 py-2 bg-black text-white rounded-sm items-end cursor-pointer" id="add-transaction">
-                    + Add Transaction
-                </button>
-            </div>
-        </aside>
-        <main class="flex-1 h-screen overflow-hidden flex flex-col">
-            <div id="overlay" class="hidden fixed inset-0 z-10 sm:hidden"></div>
-            <nav
-                class="sticky top-0 z-10 bg-[#f6f6f6] flex justify-between py-4 px-6 gap-6 items-center border-b shrink-0">
-                <div class="flex items-center gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="lucide lucide-menu-icon lucide-menu sm:hidden cursor-pointer" id="menu-btn">
-                        <path d="M4 5h16" />
-                        <path d="M4 12h16" />
-                        <path d="M4 19h16" />
+            <div class="border dark:border-[#cccccc] p-4 mt-6 flex-1 min-w-0">
+              <div class="flex flex-col text-xs gap-4">
+                <h2 class="text-2xl font-medium dark:text-[#cccccc]">
+                  All Transactions
+                </h2>
+                <div class="flex gap-4 flex-wrap">
+                  <div class="flex p-2 gap-1 items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-search-icon lucide-search dark:text-[#cccccc]"
+                    >
+                      <path d="m21 21-4.34-4.34" />
+                      <circle cx="11" cy="11" r="8" />
                     </svg>
-                    <div class="sm:hidden flex items-center">
-                        <div class="flex flex-col items-end">
-                            <h2 class="sm:text-2xl font-semibold flex items-center gap-1 border-b pr-2">FinTrack Pro
-                            </h2>
-                        </div>
-                    </div>
+                    <input
+                      type="text"
+                      id="search-transaction"
+                      placeholder="Search transactions"
+                      class="p-1 outline-none border-b bg-transparent dark:border-[#cccccc] dark:text-[#cccccc] dark:placeholder-zinc-500"
+                    />
+                  </div>
+                  <select
+                    id="filter-type"
+                    class="outline-none bg-transparent dark:text-[#cccccc]"
+                  >
+                    <option value="all" selected>All Types</option>
+                    <option value="income">Income only</option>
+                    <option value="expense">Expense only</option>
+                  </select>
+                </div>
+                <table class="dark:text-[#cccccc]">
+                  <thead>
+                    <tr>
+                      <th>DATE</th>
+                      <th>DESCRIPTION</th>
+                      <th>CATEGORY</th>
+                      <th>AMOUNT</th>
+                      <th>EDIT</th>
+                      <th>DELETE</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transactionTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
-                    <div class="hidden sm:flex flex-col">
-                        <h1 class="text-sm font-semibold">Financial Overview</h1>
-                        <p class="text-xs border-b">Real-time tracking application</p>
-                    </div>
-                </div>
-                <div class="flex gap-2 items-center">
-                    <label class="cursor-pointer">
-                        <input type="checkbox" id="toggle">
-                        <div class="icon-set">
-                            <svg class="sun-icon" xmlns="http://w3.org" width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="4" />
-                                <path d="M12 2v2" />
-                                <path d="M12 20v2" />
-                                <path d="m4.93 4.93 1.41 1.41" />
-                                <path d="m17.66 17.66 1.41 1.41" />
-                                <path d="M2 12h2" />
-                                <path d="M20 12h2" />
-                                <path d="m6.34 17.66-1.41 1.41" />
-                                <path d="m19.07 4.93-1.41 1.41" />
-                            </svg>
-                            <svg class="moon-icon" xmlns="http://w3.org" width="18" height="18" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round">
-                                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
-                            </svg>
-                        </div>
-                    </label>
-                    <div class="flex items-center gap-2 border-l px-2">
-                        <p class="text-sm" id="nav-user"></p>
-                        <button id="logout"
-                            class="px-4 py-2 bg-black text-white rounded-sm text-xs cursor-pointer">Logout</button>
-                    </div>
-                </div>
-            </nav>
+          <div class="flex justify-end py-4">
+            <button
+              class="bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] py-2 px-4 rounded-sm cursor-pointer active:scale-95" id="reset-data"
+            >
+              Reset All Data
+            </button>
+          </div>
+        </section>
 
-            <section class="flex-1 overflow-y-auto p-4" id="dashboard-sec">
-                <div class="flex justify-evenly gap-4">
-                    <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
-                        <div class="border w-full p-4 flex flex-col gap-2">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="lucide lucide-landmark-icon lucide-landmark">
-                                    <path d="M10 18v-7" />
-                                    <path
-                                        d="M11.119 2.205a2 2 0 0 1 1.762 0l7.84 3.846A.5.5 0 0 1 20.5 7h-17a.5.5 0 0 1-.22-.949z" />
-                                    <path d="M14 18v-7" />
-                                    <path d="M18 18v-7" />
-                                    <path d="M3 22h18" />
-                                    <path d="M6 18v-7" />
-                                </svg>
-                                <p class="text-sm">Current Balance</p>
-                            </div>
-                            <h2 class="text-2xl font-semibold"><span>$0.00</span></h2>
-                        </div>
-                        <div class="border w-full p-4 flex flex-col gap-2">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="#15603d" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-banknote-arrow-down-icon lucide-banknote-arrow-down">
-                                    <path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
-                                    <path d="m16 19 3 3 3-3" />
-                                    <path d="M18 12h.01" />
-                                    <path d="M19 16v6" />
-                                    <path d="M6 12h.01" />
-                                    <circle cx="12" cy="12" r="2" />
-                                </svg>
-                                <p class="text-sm">Total Income</p>
-                            </div>
-                            <h2 class="text-2xl font-semibold text-green-700"><span>$0.00</span></h2>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 flex-col lg:flex-row justify-evenly w-full">
-                        <div class="border w-full p-4 flex flex-col gap-2">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-banknote-arrow-up-icon lucide-banknote-arrow-up">
-                                    <path d="M12 18H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5" />
-                                    <path d="M18 12h.01" />
-                                    <path d="M19 22v-6" />
-                                    <path d="m22 19-3-3-3 3" />
-                                    <path d="M6 12h.01" />
-                                    <circle cx="12" cy="12" r="2" />
-                                </svg>
-                                <p class="text-sm">Total Expense</p>
-                            </div>
-                            <h2 class="text-2xl font-semibold text-red-700"><span>$0.00</span></h2>
-                        </div>
-                        <div class="border w-full p-4 flex flex-col gap-2">
-                            <div class="flex items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    class="lucide lucide-arrow-right-left-icon lucide-arrow-right-left">
-                                    <path d="m16 3 4 4-4 4" />
-                                    <path d="M20 7H4" />
-                                    <path d="m8 21-4-4 4-4" />
-                                    <path d="M4 17h16" />
-                                </svg>
-                                <p class="text-sm">Total Transactions</p>
-                            </div>
-                            <h2 class="text-2xl font-semibold"><span>0</span></h2>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex flex-col lg:flex-row gap-6 w-full">
-                    <div class="border p-4 mt-6 flex-1 min-w-0">
-                        <div class="flex justify-between">
-                            <h2 class="text-2xl font-medium">Cash Flow Analysis</h2>
-                        </div>
-                        <div class="h-[250px] relative">
-                            <canvas id="cash-chart" class="block box-border"></canvas>
-                        </div>
-                    </div>
-                    <div class="border p-4 mt-6 flex-1 min-w-0">
-                        <div class="flex flex-col text-xs gap-4">
-                            <h2 class="text-2xl font-medium">All Transactions</h2>
-                            <div class="flex gap-4 flex-wrap">
-                                <div class="flex p-2 gap-1 items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                        stroke-linejoin="round" class="lucide lucide-search-icon lucide-search">
-                                        <path d="m21 21-4.34-4.34" />
-                                        <circle cx="11" cy="11" r="8" />
-                                    </svg>
-                                    <input type="text" id="" placeholder="Search transactions"
-                                        class="p-1 outline-none border-b">
-                                </div>
-                                <select id="" class="outline-none">
-                                    <option value="all" selected>All Types</option>
-                                    <option value="income">Income only</option>
-                                    <option value="expense">Expense only</option>
-                                </select>
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>DATE</th>
-                                        <th>DESCRIPTION</th>
-                                        <th>CATEGORY</th>
-                                        <th>AMOUNT</th>
-                                        <th>EDIT</th>
-                                        <th>DELETE</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactionTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex justify-end py-4">
-                    <button class="bg-black text-white py-2 px-4 rounded-sm cursor-pointer">Reset All
-                        Data</button>
-                </div>
-            </section>
-
-            <section class="hidden flex-1 p-4" id="setting-sec">
-                <div>
-                    <h2 class="text-2xl font-medium">Settings</h2>
-                    <p class="text-sm border-b w-fit">Manage your account profile and app formatting.</p>
-                </div>
-                <div class="flex flex-col gap-4 border mt-4 p-4 w-fit">
-                    <h2 class="text-2xl font-semibold">Profile Details</h2>
-                    <div class="flex gap-4 flex-wrap justify-between">
-                        <div class="flex flex-col w-fit gap-2">
-                            <label for="update-name" class="text-sm">Full Name</label>
-                            <input type="text" id="update-name" class="border-b outline-none text-sm" required>
-                        </div>
-                        <div class="flex flex-col w-fit gap-2">
-                            <label for="currency" class="text-sm">Primary Currency
-                            </label>
-                            <select id="currency" class="border-b outline-none">
-                                <option value="USD" selected>USD ($)</option>
-                                <option value="EUR">EUR (€)</option>
-                                <option value="GBP">GBP (£)</option>
-                                <option value="INR">INR (₹)</option>
-                                <option value="JPY">JPY (¥)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="bg-black text-white py-2 px-4 w-fit rounded-sm text-sm cursor-pointer" id="update-profile">Save Changes</button>
-                </div>
-            </section>
-        </main>
+        <section
+          class="hidden flex-1 p-4 bg-[#f6f6f6] dark:bg-[#0d0d0d]"
+          id="setting-sec"
+        >
+          <div>
+            <h2 class="text-2xl font-medium dark:text-[#cccccc]">Settings</h2>
+            <p
+              class="text-sm border-b w-fit dark:border-[#cccccc] dark:text-[#cccccc]"
+            >
+              Manage your account profile and app formatting.
+            </p>
+          </div>
+          <div
+            class="flex flex-col gap-4 border dark:border-[#cccccc] mt-4 p-4 w-fit"
+          >
+            <h2 class="text-2xl font-semibold dark:text-[#cccccc]">
+              Profile Details
+            </h2>
+            <div class="flex gap-4 flex-wrap justify-between">
+              <div class="flex flex-col w-fit gap-2">
+                <label for="update-name" class="text-sm dark:text-[#cccccc]"
+                  >Full Name</label
+                >
+                <input
+                  type="text"
+                  id="update-name"
+                  class="border-b outline-none text-sm bg-transparent dark:border-[#cccccc] dark:text-[#cccccc]"
+                  required
+                />
+              </div>
+              <div class="flex flex-col w-fit gap-2">
+                <label for="currency" class="text-sm dark:text-[#cccccc]"
+                  >Primary Currency
+                </label>
+                <select
+                  id="currency"
+                  class="border-b outline-none bg-transparent dark:border-[#cccccc] dark:text-[#cccccc]"
+                >
+                  <option value="USD" selected>USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="INR">INR (₹)</option>
+                  <option value="JPY">JPY (¥)</option>
+                </select>
+              </div>
+            </div>
+            <button
+              class="bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] py-2 px-4 w-fit rounded-sm text-sm cursor-pointer active:scale-95"
+              id="update-profile"
+            >
+              Save Changes
+            </button>
+          </div>
+        </section>
+      </main>
     </div>
 
-    <script src="app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</body>
-
+    <script src="app.js"></script>
+  </body>
 </html>
