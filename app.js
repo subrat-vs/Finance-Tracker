@@ -378,14 +378,14 @@ resetBtn.addEventListener("click", () => {
 
 function applyTheme(isDark) {
     document.documentElement.classList.toggle("dark", isDark)
-    localStorage.setItem("theme", isDark ? "light" : "dark")
+    localStorage.setItem("theme", isDark ? "dark" : "light")
     if (themeToggle) themeToggle.checked = isDark
 }
 
 function initTheme() {
     const savedTheme = localStorage.getItem("theme")
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-    applyTheme(savedTheme === "dark" || (!savedTheme && prefersDark))
+    const prefersDark = window.matchMedia("(prefers-color-scheme: light)").matches
+    applyTheme(savedTheme === "light" || (!savedTheme && prefersDark))
 }
 
 themeToggle.addEventListener("change", () => applyTheme(themeToggle.checked))
