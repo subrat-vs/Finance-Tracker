@@ -135,7 +135,7 @@
       </div>
       <div class="flex flex-col gap-2">
         <button
-          class="bg-blue-700 text-white p-2 rounded-sm cursor-pointer"
+          class="bg-blue-700 text-white p-2 rounded-sm cursor-pointer active:scale-95"
           id="login-btn"
         >
           Login
@@ -178,7 +178,7 @@
       <div class="flex flex-col gap-2">
         <button
           type="submit"
-          class="bg-green-700 text-white p-2 rounded-sm cursor-pointer"
+          class="bg-green-700 text-white p-2 rounded-sm cursor-pointer active:scale-95"
           id="reg-btn"
         >
           Register
@@ -283,7 +283,7 @@
         </div>
         <button
           class="px-4 py-2 bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] rounded-sm items-end cursor-pointer active:scale-95"
-          id="save-transaction"
+          id="save-transaction" type="submit"
         >
           Save Transaction
         </button>
@@ -649,15 +649,15 @@
                     <option value="expense">Expense only</option>
                   </select>
                 </div>
-                <table class="dark:text-[#cccccc]">
-                  <thead>
+                <table class="dark:text-[#cccccc] w-full table-auto">
+                  <thead class="hidden" id="transaction-thead">
                     <tr>
-                      <th>DATE</th>
-                      <th>DESCRIPTION</th>
-                      <th>CATEGORY</th>
-                      <th>AMOUNT</th>
-                      <th>EDIT</th>
-                      <th>DELETE</th>
+                      <th class="text-left pb-2 dark:[#cccccc]">DATE</th>
+                      <th class="text-left pb-2 dark:[#cccccc]">DESCRIPTION</th>
+                      <th class="text-left pb-2 dark:[#cccccc]">CATEGORY</th>
+                      <th class="text-left pb-2 dark:[#cccccc]">AMOUNT</th>
+                      <th class="text-left pb-2 dark:[#cccccc]">EDIT</th>
+                      <th class="text-left pb-2 dark:[#cccccc]">DELETE</th>
                     </tr>
                   </thead>
                   <tbody id="transactionTableBody"></tbody>
