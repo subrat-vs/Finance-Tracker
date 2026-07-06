@@ -9,6 +9,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
       rel="stylesheet"
     />
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style type="text/tailwindcss">
       @custom-variant dark (&:where(.dark, .dark *));
@@ -283,7 +284,8 @@
         </div>
         <button
           class="px-4 py-2 bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] rounded-sm items-end cursor-pointer active:scale-95"
-          id="save-transaction" type="submit"
+          id="save-transaction"
+          type="submit"
         >
           Save Transaction
         </button>
@@ -328,7 +330,7 @@
         <div class="flex items-center">
           <div class="flex flex-col items-end">
             <h2
-              class="sm:text-2xl font-semibold flex items-center gap-1 border-b dark:border-[#cccccc] pr-2 dark:text-[#cccccc]"
+              class="sm:text-2xl font-semibold flex items-center pr-2 dark:text-[#cccccc]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -340,15 +342,18 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-swiss-franc-icon lucide-swiss-franc bg-black text-white p-2 dark:bg-[#cccccc] dark:text-[#121212]"
+                class="lucide lucide-receipt-swiss-franc-icon lucide-receipt-swiss-franc"
               >
-                <path d="M10 21V3h8" />
-                <path d="M6 16h9" />
-                <path d="M10 9.5h7" />
+                <path d="M10 11h4" />
+                <path d="M10 17V7h5" />
+                <path
+                  d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z"
+                />
+                <path d="M8 15h5" />
               </svg>
               inTrack &nbsp; &nbsp; &nbsp; &nbsp;
             </h2>
-            <p class="text-sm dark:text-[#cccccc]">Enterprise Finance</p>
+            <p class="text-sm dark:text-[#cccccc] border-t dark:border-[#cccccc]">Enterprise Finance</p>
           </div>
         </div>
         <div class="flex flex-col gap-6 px-8">
@@ -668,7 +673,8 @@
 
           <div class="flex justify-end py-4">
             <button
-              class="bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] py-2 px-4 rounded-sm cursor-pointer active:scale-95" id="reset-data"
+              class="bg-black text-white dark:bg-[#cccccc] dark:text-[#121212] py-2 px-4 rounded-sm cursor-pointer active:scale-95"
+              id="reset-data"
             >
               Reset All Data
             </button>
