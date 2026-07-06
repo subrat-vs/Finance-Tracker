@@ -49,6 +49,7 @@ const countEl = document.getElementById("transaction-count");
 const resetBtn = document.getElementById("reset-data");
 const modalBackdrop = document.getElementById("modal-backdrop");
 
+const currencyInput = document.getElementById("currency")
 const themeToggle = document.getElementById("toggle");
 
 const VIEWS = {
@@ -126,7 +127,13 @@ let cashChart = null;
 
 const generateId = () =>
   Date.now().toString(36) + Math.random().toString(36).slice(2);
-const formatAmount = (num) => `$${Math.abs(num).toFixed(2)}`;
+const CURRENCY_SYMBOLS = { USD: "$", EUR: "€", GBP: "£", INR: "₹", JPY: "¥" }
+function getCurrencySymbol() {
+    const saved = localStorage.getItem("currency") || "INR"
+    return CURRENCY_SYMBOLS[saved]
+}
+const formatAmount = (num) => `${getCurrencySymbol()}${Math.abs(num).toFixed(2)}`
+
 function getTodayIST() {
   return new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
 }
@@ -374,6 +381,10 @@ dashboard.addEventListener("click", () => {
   dashboardSec.classList.remove("hidden");
   settingSec.classList.add("hidden");
 });
+currencyInput.addEventListener("change", () => {
+    localStorage.setItem("currency", currencyInput.value)
+    refreshAll()
+})
 
 setting.addEventListener("click", () => {
   dashboardSec.classList.add("hidden");
@@ -454,7 +465,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   if (isLoggedIn) updateNavUser();
   isLoggedIn ? showView("app") : showView(hasAcc ? "login" : "reg");
-
+  currencyInput.value = localStorage.getItem("currency") || "INR"
   initChart();
   refreshAll();
 });
