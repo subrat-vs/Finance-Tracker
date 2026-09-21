@@ -13,5 +13,8 @@ Personal finance tracker built with HTML, Tailwind CSS, and vanilla JavaScript.
 * Light / dark mode
 * `localStorage`
 
+### Tech Stack
 
-Made for learning.
+HTML · Tailwind CSS · JavaScript · Chart.js · Lucide Icons
+
+Made for learning <img src="./image/github-profile.jpg" width="12">
