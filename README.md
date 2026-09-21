@@ -17,5 +17,4 @@ Personal finance tracker built with HTML, Tailwind CSS, and vanilla JavaScript.
 
 HTML · Tailwind CSS · JavaScript · Chart.js · Lucide Icons
 
-
 Made for learning.
